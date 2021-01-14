@@ -1,0 +1,15 @@
+{
+  "name": "djsv12-selfbot-kit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "dada513",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "patch-package"
+  },
+  "dependencies": {
+    "discord.js-light": "^3.5.0",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0"
+  }
+}

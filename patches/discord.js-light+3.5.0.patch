@@ -1,0 +1,56 @@
+diff --git a/node_modules/discord.js/src/client/BaseClient.js b/node_modules/discord.js/src/client/BaseClient.js
+index 29abeca..cf74d5a 100644
+--- a/node_modules/discord.js/src/client/BaseClient.js
++++ b/node_modules/discord.js/src/client/BaseClient.js
+@@ -46,7 +46,7 @@ class BaseClient extends EventEmitter {
+      * @type {RESTManager}
+      * @private
+      */
+-    this.rest = new RESTManager(this, options._tokenType);
++    this.rest = new RESTManager(this);
+   }
+ 
+   /**
+diff --git a/node_modules/discord.js/src/client/Client.js b/node_modules/discord.js/src/client/Client.js
+index 5847f75..411f78d 100644
+--- a/node_modules/discord.js/src/client/Client.js
++++ b/node_modules/discord.js/src/client/Client.js
+@@ -32,7 +32,7 @@ class Client extends BaseClient {
+    * @param {ClientOptions} [options] Options for the client
+    */
+   constructor(options = {}) {
+-    super(Object.assign({ _tokenType: 'Bot' }, options));
++    super(options);
+ 
+     // Obtain shard details from environment or if present, worker threads
+     let data = process.env;
+diff --git a/node_modules/discord.js/src/rest/RESTManager.js b/node_modules/discord.js/src/rest/RESTManager.js
+index 799f602..a8b435c 100644
+--- a/node_modules/discord.js/src/rest/RESTManager.js
++++ b/node_modules/discord.js/src/rest/RESTManager.js
+@@ -8,10 +8,9 @@ const Collection = require('../util/Collection');
+ const { Endpoints } = require('../util/Constants');
+ 
+ class RESTManager {
+-  constructor(client, tokenPrefix = 'Bot') {
++  constructor(client) {
+     this.client = client;
+     this.handlers = new Collection();
+-    this.tokenPrefix = tokenPrefix;
+     this.versioned = true;
+     this.globalTimeout = null;
+     if (client.options.restSweepInterval > 0) {
+@@ -26,8 +25,11 @@ class RESTManager {
+   }
+ 
+   getAuth() {
+-    const token = this.client.token || this.client.accessToken;
+-    if (token) return `${this.tokenPrefix} ${token}`;
++    if (this.client.token && this.client.user && this.client.user.bot) {
++      return `Bot ${this.client.token}`;
++    } else if (this.client.token) {
++      return this.client.token;
++    }
+     throw new Error('TOKEN_MISSING');
+   }
+ 
