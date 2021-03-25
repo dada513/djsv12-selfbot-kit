@@ -8,8 +8,12 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "discord.js-light": "^3.5.0",
+    "js-base64": "^3.6.0",
     "patch-package": "^6.2.2",
-    "postinstall-postinstall": "^2.1.0"
+    "postinstall-postinstall": "^2.1.0",
+    "user-agents": "^1.0.601",
+    "useragent": "^2.3.0"
   }
 }
