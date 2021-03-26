@@ -13,7 +13,7 @@
 ```sh
 Clone the repo and everything should be working.  
 Please require discord.js-light instead of discord.js.  
-You can client.login with your user token.  
+Then use discord.js as normal. You can client.login with your user token.  
 Use login.js helper to get token from user + email
 ```
 
